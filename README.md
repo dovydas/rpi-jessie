@@ -18,6 +18,6 @@ Debian Jessie host with the following packages installed:
 
 ### Usage
 
-```sudo ./build_image.sh [block_device]```
+```sudo ./build_image.sh [block_device|image_file]```
 
-block_device is an optional parameter if you want to write directly to a disk instead of an image.
+You can pass block_device (/dev/mmcblk0) to create the image directly on a card, or specify image_file you would like to create. If neither is given, an image file called rpi_basic_jessie_$(date).img will be created. You can write this image to a card using dd or other tools.

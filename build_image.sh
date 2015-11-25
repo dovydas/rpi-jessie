@@ -22,28 +22,37 @@ buildenv=$(pwd)/build
 # Additional scripts
 scripts=$(pwd)/scripts
 
-device=$1
 rootfs="${buildenv}/rootfs"
 bootfs="${rootfs}/boot"
 
 mydate=`date +%Y%m%d`
-
-image=""
 
 if [ $EUID -ne 0 ]; then
   echo "this tool must be run as root"
   exit 1
 fi
 
-if ! [ -b $device ]; then
-  echo "$device is not a block device"
-  exit 1
+# If $1 is block device
+if [ -b $1 ]; then
+  device=$1
+else
+  if [ "$1" == "" ]; then
+    image="$(pwd)/rpi_basic_${deb_release}_${mydate}.img"
+  else
+    image=$1
+    if [ -f $image ]; then
+      read -p "The file ${image} already exists. Do you want to overwrite it? [y/N] " -n 1 -r
+      if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+      fi
+      rm -y $image
+    fi
+  fi
 fi
 
 if [ "$device" == "" ]; then
   echo "no block device given, creating an image"
   mkdir -p $buildenv
-  image="$(pwd)/rpi_basic_${deb_release}_${mydate}.img"
   dd if=/dev/zero of=$image bs=1MB count=$imagesize
   device=`losetup -f --show $image`
   echo "image $image created and mounted as $device"
