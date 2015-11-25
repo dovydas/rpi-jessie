@@ -154,7 +154,7 @@ chmod +x /usr/bin/rpi-update
 mkdir -p /lib/modules
 touch /boot/start.elf
 rpi-update
-apt-get -y install locales console-common ntp openssh-server less vim parted ruby ruby-dev ruby-ffi gem build-essential
+apt-get -y install locales console-common ntp openssh-server less vim parted
 sed -i -e 's/KERNEL\!=\"eth\*|/KERNEL\!=\"/' /lib/udev/rules.d/75-persistent-net-generator.rules
 rm -f /etc/udev/rules.d/70-persistent-net.rules
 rm -f third-stage
