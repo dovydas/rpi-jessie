@@ -149,11 +149,10 @@ echo "#!/bin/bash
 debconf-set-selections /debconf.set
 rm -f /debconf.set
 apt-get update 
-apt-get -y install git-core binutils ca-certificates curl
+apt-get -y install git-core binutils ca-certificates wget curl
+wget https://raw.githubusercontent.com/Hexxeh/rpi-update/master/rpi-update -O /usr/bin/rpi-update
 chmod +x /usr/bin/rpi-update
-mkdir -p /lib/modules
-touch /boot/start.elf
-rpi-update
+UPDATE_SELF=0 SKIP_BACKUP=1 /usr/bin/rpi-update
 apt-get -y install locales console-common ntp openssh-server less vim parted
 sed -i -e 's/KERNEL\!=\"eth\*|/KERNEL\!=\"/' /lib/udev/rules.d/75-persistent-net-generator.rules
 rm -f /etc/udev/rules.d/70-persistent-net.rules
