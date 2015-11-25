@@ -16,6 +16,7 @@ imagesize="1000"
 bootsize="64M"
 deb_release="jessie"
 
+scriptroot=$(pwd)
 # Build root
 buildenv=$(pwd)/build
 
@@ -150,9 +151,9 @@ console-common	console-data/keymap/full	select	de-latin1-nodeadkeys
 cp -R ${scripts}/* .
 
 mkdir -m 700 root/.ssh
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+BUdfUFuumWDymvaEu9OZwimI8RbBavpYwt41uKvkAM2LRE8Sw+uKA3LbNJd0vdshNRxCQmw2qyaR9y0zB2Wx7gStYTVOanaHbx9D8Hj/9zUd0XgnUbTWM55veF3aeGcdI9xdrDU92FXmNo6WeRbSNWoAWGZbOd09fW9CiGFpwDhV2iXZ2/fsziOEAJYqao9hAbQkoJfFYuU02kwnDnzRCKiVgLvkUgbZHoN+ru2NDCcuDPpgQaIA1Z9qF06exuiujETSy3CI92jPlcst/TLloEe53GV32+wyhBW5LMu76oVHi9XUi6uwtZ1ixncwKlh51ZyKaBJmTHNf6tdumXuj dovydas@orpheus
-" > root/.ssh/authorized_keys
+cat $(scriptroot)/id_rsa.pub > root/.ssh/authorized_keys
 chmod 600 root/.ssh/authorized_keys
+echo "root:raspberry" | chpasswd
 
 echo "#!/bin/bash
 debconf-set-selections /debconf.set

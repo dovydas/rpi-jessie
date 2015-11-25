@@ -18,6 +18,10 @@ Debian Jessie host with the following packages installed:
 
 ### Usage
 
+Optionally, replace id_rsa.pub file with a link to your ssh public key (most likely ~/.ssh/id_rsa.pub) if you want to log into the RPi with your keypair.
+
 ```sudo ./build_image.sh [block_device|image_file]```
 
 You can pass block_device (/dev/mmcblk0) to create the image directly on a card, or specify image_file you would like to create. If neither is given, an image file called rpi_basic_jessie_$(date).img will be created. You can write this image to a card using dd or other tools.
+
+root password is ```raspberry```
